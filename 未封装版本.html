@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li{
+			list-style: none;
+		}
+		.container{
+			width: 700px;
+			height: 500px;
+			border:2px solid black;
+			margin: 200px auto;
+			overflow: hidden;
+			position: relative;
+
+		}
+		.list{
+			width: 4900px;
+			height: 500px;
+			position: absolute;
+			left: 0;
+			top: 0;
+
+		}
+		.list li{
+			width: 700px;
+			height: 500px;
+			float: left;
+		}
+		.dot{
+			position: absolute;
+			left: 260px;
+			bottom: 30px;
+		}
+		.dot li{
+			width: 20px;
+			height: 20px;
+			border-radius: 10px;
+			background:rgba(255,255,255,.3);
+			float: left;
+			margin: 5px;
+		}
+		.btn{
+			position: absolute;
+			width: 50px;
+			height: 100px;
+			font-size: 30px;
+			color: white;
+			background: rgba(0,0,0,.3);
+			line-height: 100px;
+			text-align: center;
+			display: none;
+
+		}
+		.pre{
+			left: 0;
+			top: 200px;
+		}
+		.next{
+			right:0;
+			top: 200px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<ul class="list">
+			<li><img src="img/1.jpg" width="700" height="500"></li>
+			<li><img src="img/2.jpg" width="700" height="500"></li>
+			<li><img src="img/3.jpg" width="700" height="500"></li>
+			<li><img src="img/4.jpg" width="700" height="500"></li>
+			<li><img src="img/5.jpg" width="700" height="500"></li>
+			<li><img src="img/6.jpg" width="700" height="500"></li>
+		</ul>
+		<ul class="dot">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<div class="pre btn">&lt;</div>
+		<div class="next btn">&gt;</div>
+	</div>
+	
+	
+	<script type="text/javascript" src="jquery.js"></script>
+	<script>
+		function loop (){
+			var list = $('.list')
+			var list_li = $('.list li')
+			var dot = $('.dot')
+			var dot_li = $('.dot li')
+			var pre = $('.pre')
+			var next = $('.next')
+			var copy = list_li.eq(0).clone(true)
+			var container = $('.container')
+
+			copy.appendTo(list)
+			dot_li.eq(0).css('background','rgba(255,255,255,.8)')
+
+			var index = 0;
+			var timer;
+			//这里不用太纠结于index值的判断,记住一点，想要把谁滑动过来就把index的值等于此元素下标，并把list的left立即设为此元素所在的位置(不能且不需要动画)
+			//move函数调用自己实现循环动画效果
+			function move(){
+				if(index==-1){
+					index=5;
+					list.css('left',-4200)
+				}
+				if(index==7){
+					list.css('left',0)
+					index=1;
+				}
+				if(index==6){
+					changeDot(0);
+				}else{
+					changeDot(index);
+				}
+				list.stop().animate({left:-index*700},1000,function (){
+					clearInterval(timer)
+					// timer = setTimeout("move(++index)",3000)
+					timer = setTimeout(function (){
+						index++
+						move(index)
+					},3000)
+				})
+			}
+
+			// timer = setTimeout("move(++index)",3000);
+			timer = setTimeout(function (){
+				index++
+				move(index)
+			},3000)
+			function changeDot(index){
+				for(var i = 0;i < dot_li.length;i++){
+					dot_li.eq(i).css('background','rgba(255,255,255,.3)')
+				}
+				dot_li.eq(index).css('background','rgba(255,255,255,.8)')
+			}
+
+			dot_li.click(function (){
+				index = $(this).index()
+				clearTimeout(timer)
+				move()
+			})
+
+			pre.click(function (){
+				clearTimeout(timer)
+				index--
+				move()
+			})
+
+			next.click(function (){
+				clearTimeout(timer)
+				index++
+				move()
+			})
+
+			container.mouseenter(function (){
+				pre.show()
+				next.show()
+			})
+
+			container.mouseleave(function (){
+				pre.hide()
+				next.hide()
+			})
+		}
+		loop()
+	</script>
+</body>
+</html>

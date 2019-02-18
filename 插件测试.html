@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li{
+			list-style: none;
+		}
+		html{
+			width: 100%;
+		}
+		.container{
+			width: 100%;
+			height: 500px;
+			border:2px solid black;
+			margin: 200px auto;
+			overflow: hidden;
+			position: relative;
+
+		}
+		.list{
+			width: 800%;
+			height: 500px;
+			position: absolute;
+			left: 0;
+			top: 0;
+
+		}
+		.list li{
+			width: 12.5%;
+			height: 500px;
+			float: left;
+		}
+		.list li img{
+			width: 100%;
+			height: 100%;
+		}
+		.dot{
+			position: absolute;
+			left: 260px;
+			bottom: 30px;
+		}
+		.dot li{
+			width: 20px;
+			height: 20px;
+			border-radius: 10px;
+			background:rgba(255,255,255,.3);
+			float: left;
+			margin: 5px;
+		}
+		.btn{
+			position: absolute;
+			width: 50px;
+			height: 100px;
+			font-size: 30px;
+			color: white;
+			background: rgba(0,0,0,.3);
+			line-height: 100px;
+			text-align: center;
+			display: none;
+
+		}
+		.pre{
+			left: 0;
+			top:50%;
+			margin-top: -50px;
+		}
+		.next{
+			right:0;
+			top:50%;
+			margin-top: -50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<ul class="list">
+			<li><img src="img/1.jpg"></li>
+			<li><img src="img/2.jpg"></li>
+			<li><img src="img/3.jpg"></li>
+			<li><img src="img/4.jpg"></li>
+			<li><img src="img/5.jpg"></li>
+			<li><img src="img/6.jpg"></li>
+			<li><img src="img/7.jpg"></li>
+		</ul>
+		<ul class="dot">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<div class="pre btn">&lt;</div>
+		<div class="next btn">&gt;</div>
+	</div>
+	
+	<script type="text/javascript" src="jquery-1.12.4.js"></script>
+	<script type="text/javascript" src='loop.js'></script>
+	<script>
+		var list = $('.list')
+		var list_li = $('.list li')
+		var dot = $('.dot')
+		var dot_li = $('.dot li')
+		var pre = $('.pre')
+		var next = $('.next')
+		var container = $('.container')
+		$.loop(container,list,list_li,dot,dot_li,pre,next)
+		// loop (container,list,list_li)
+	</script>
+</body>
+</html>
